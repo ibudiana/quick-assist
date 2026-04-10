@@ -1,0 +1,155 @@
+{
+  "users": {
+    "superadmin_demo": {
+      "name": "Super Admin",
+      "email": "superadmin@demo.com",
+      "role": "superadmin",
+      "onlineStatus": false,
+      "lastSeen": 1709020000000
+    },
+    "agent_demo_1": {
+      "name": "Sarah Support",
+      "email": "sarah@demo.com",
+      "role": "agent",
+      "onlineStatus": false,
+      "lastSeen": 1709025000000
+    },
+    "agent_demo_2": {
+      "name": "John Helper",
+      "email": "john@demo.com",
+      "role": "agent",
+      "onlineStatus": false,
+      "lastSeen": 1709030000000
+    },
+    "customer_1": {
+      "name": "Alice Wonderland",
+      "email": "alice@company.com",
+      "role": "customer",
+      "onlineStatus": false,
+      "lastSeen": 1709026000000
+    },
+    "customer_2": {
+      "name": "Bob Builder",
+      "email": "bob@startup.io",
+      "role": "customer",
+      "onlineStatus": false,
+      "lastSeen": 1709010000000
+    },
+    "customer_3": {
+      "name": "Charlie Chaplin",
+      "email": "charlie@movies.net",
+      "role": "customer",
+      "onlineStatus": false,
+      "lastSeen": 1709031000000
+    }
+  },
+  "chats": {
+    "chat_demo_1": {
+      "customerId": "customer_1",
+      "customerName": "Alice Wonderland",
+      "customerEmail": "alice@company.com",
+      "agentId": null,
+      "status": "open",
+      "lastMessage": "How do I upgrade my team's enterprise plan?",
+      "lastUpdated": 1709026000000,
+      "unreadCount": 1,
+      "messages": {
+        "msg_1": {
+          "senderId": "customer_1",
+          "messageText": "Hello! I am currently on the Pro plan.",
+          "timestamp": 1709025900000,
+          "readBy": {}
+        },
+        "msg_2": {
+          "senderId": "customer_1",
+          "messageText": "How do I upgrade my team's enterprise plan?",
+          "timestamp": 1709026000000,
+          "readBy": {}
+        }
+      }
+    },
+    "chat_demo_2": {
+      "customerId": "customer_2",
+      "customerName": "Bob Builder",
+      "customerEmail": "bob@startup.io",
+      "agentId": "agent_demo_1",
+      "status": "closed",
+      "lastMessage": "Thank you, that solved my issue perfectly!",
+      "lastUpdated": 1709011000000,
+      "unreadCount": 0,
+      "messages": {
+        "msg_1": {
+          "senderId": "customer_2",
+          "messageText": "I can't seem to reset my password using the link.",
+          "timestamp": 1709009000000,
+          "readBy": {}
+        },
+        "msg_2": {
+          "senderId": "agent_demo_1",
+          "messageText": "Hi Bob, I just manually sent a new reset token to your inbox. Let me know if you receive it.",
+          "timestamp": 1709010500000,
+          "readBy": {}
+        },
+        "msg_3": {
+          "senderId": "customer_2",
+          "messageText": "Thank you, that solved my issue perfectly!",
+          "timestamp": 1709011000000,
+          "readBy": {}
+        }
+      }
+    },
+    "chat_demo_3": {
+      "customerId": "customer_3",
+      "customerName": "Charlie Chaplin",
+      "customerEmail": "charlie@movies.net",
+      "agentId": "agent_demo_2",
+      "status": "open",
+      "lastMessage": "I will wait for your response.",
+      "lastUpdated": 1709031000000,
+      "unreadCount": 2,
+      "messages": {
+        "msg_1": {
+          "senderId": "customer_3",
+          "messageText": "Is there a way to integrate the API with Python?",
+          "timestamp": 1709030500000,
+          "readBy": {}
+        },
+        "msg_2": {
+          "senderId": "customer_3",
+          "messageText": "I will wait for your response.",
+          "timestamp": 1709031000000,
+          "readBy": {}
+        }
+      }
+    }
+  },
+  "subscribers": {
+    "alice_company_com": {
+      "name": "Alice Wonderland",
+      "email": "alice@company.com",
+      "customerId": "customer_1",
+      "subscribedAt": 1709025900000
+    },
+    "bob_startup_io": {
+      "name": "Bob Builder",
+      "email": "bob@startup.io",
+      "customerId": "customer_2",
+      "subscribedAt": 1709009000000
+    },
+    "charlie_movies_net": {
+      "name": "Charlie Chaplin",
+      "email": "charlie@movies.net",
+      "customerId": "customer_3",
+      "subscribedAt": 1709030500000
+    }
+  },
+  "campaigns": {
+    "camp_demo_1": {
+      "subject": "Huge Weekend Sale 50% Off!",
+      "body": "Hi there! Get 50% off all support plans this weekend.",
+      "recipientCount": 3,
+      "sentBy": "superadmin@demo.com",
+      "timestamp": 1709040000000
+    }
+  }
+}

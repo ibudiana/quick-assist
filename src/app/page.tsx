@@ -1,65 +1,58 @@
-import Image from "next/image";
+"use client";
+
+// import Image from "next/image";
+import { ChatWidget } from "@/features/chat/components/ChatWidget";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8 sm:p-20 font-(family-name:--font-geist-sans) text-center relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+
+      <main className="z-10 flex flex-col items-center gap-8 max-w-3xl">
+        <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-gray-900 leading-tight">
+          Next-Gen{" "}
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+            Customer Support
+          </span>
+        </h1>
+        <p className="text-xl sm:text-2xl text-gray-600 max-w-2xl">
+          Engage with your customers in real-time. Boost satisfaction and
+          resolve issues faster with Quick Assist.
+        </p>
+
+        <div className="flex gap-4 items-center flex-col sm:flex-row mt-8">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
+            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-blue-600 text-white gap-2 hover:bg-blue-700 text-sm sm:text-base h-12 px-8 font-medium shadow-lg hover:shadow-blue-500/30 hover:-translate-y-1 transform duration-200"
+            href="#chat"
             rel="noopener noreferrer"
+            onClick={(e) => {
+              e.preventDefault();
+              // Trigger the widget using click on the default widget button (id hack or simple interaction hint)
+              alert(
+                "Click the blue message icon at the bottom right to start chatting!",
+              );
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            Try the Chat Widget 👇
           </a>
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
+            className="rounded-full border border-solid border-gray-200 bg-white transition-colors flex items-center justify-center hover:bg-gray-50 text-gray-900 text-sm sm:text-base h-12 px-8 font-medium shadow-sm hover:shadow-md hover:-translate-y-1 transform duration-200"
+            href="/admin/login"
             rel="noopener noreferrer"
           >
-            Documentation
+            Go to Admin Dashboard
           </a>
         </div>
       </main>
+
+      <footer className="absolute bottom-6 flex gap-6 items-center flex-wrap justify-center text-sm text-gray-500 z-10">
+        Building blocks for real-time web support with Next.js and Firebase.
+      </footer>
+
+      <ChatWidget />
     </div>
   );
 }
