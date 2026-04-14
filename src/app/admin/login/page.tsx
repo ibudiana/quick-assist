@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiLock, FiMail } from "react-icons/fi";
 import { AuthService } from "@/features/auth/services/auth.service";
+import { set } from "firebase/database";
 
 export default function AdminLogin() {
   const DEMO_EMAIL = "superadmin@demo.com";
@@ -41,29 +42,33 @@ export default function AdminLogin() {
       await AuthService.login(email, password);
       router.push("/admin");
     } catch (err: unknown) {
-      setError("Failed to login. Please check your credentials.");
-      console.error(err);
+      // setError("Failed to login. Please check your credentials.");
+      setError(
+        "Failed to login. " +
+          (err instanceof Error ? err.message : "Unknown error"),
+      );
+      // console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // const handleRegister = async (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   setError("");
-  //   setLoading(true);
+  const handleRegister = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-  //   try {
-  //     await AuthService.register(email, password, "customer");
-  //     router.push("/admin");
-  //   } catch (err: unknown) {
-  //     const message = err instanceof Error ? err.message : "Unknown error";
-  //     setError("Failed to register. " + message);
-  //     console.error(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    try {
+      await AuthService.register(email, password, "customer");
+      router.push("/admin");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setError("Failed to register. " + message);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -152,7 +157,7 @@ export default function AdminLogin() {
               >
                 {loading ? "..." : "Sign In"}
               </button>
-              {/* <button
+              <button
                 type="button"
                 onClick={handleRegister}
                 disabled={loading}
@@ -160,7 +165,7 @@ export default function AdminLogin() {
                 title="Create a new account with these credentials"
               >
                 {loading ? "..." : "Register"}
-              </button> */}
+              </button>
             </div>
           </form>
 

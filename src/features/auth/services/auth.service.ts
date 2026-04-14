@@ -1,28 +1,53 @@
-import { 
-  signInWithEmailAndPassword, 
+import {
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
+  sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 import { auth, db } from "@/features/core/firebase/config";
 import { ref, update, set, serverTimestamp } from "firebase/database";
 
 export const AuthService = {
   async login(email: string, password: string) {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const userId = userCredential.user.uid;
-    
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    // const userId = userCredential.user.uid;
+    const user = userCredential.user;
+
+    // Mengecek apakah email sudah diverifikasi
+    // if (!user.emailVerified) {
+    //   throw new Error(
+    //     "Email belum diverifikasi. Harap periksa email Anda untuk verifikasi.",
+    //   );
+    // }
+
+    // Set user online
+    const userId = user.uid;
+
     // Set user online
     const userRef = ref(db, `users/${userId}`);
     await update(userRef, {
-        onlineStatus: true,
-        lastSeen: serverTimestamp()
+      onlineStatus: true,
+      lastSeen: serverTimestamp(),
     });
-    
+
     return userCredential.user;
   },
 
-  async register(email: string, password: string, role: string = "customer", defaultName?: string) {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  async register(
+    email: string,
+    password: string,
+    role: string = "customer",
+    defaultName?: string,
+  ) {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
     const user = userCredential.user;
 
     const userRef = ref(db, `users/${user.uid}`);
@@ -31,8 +56,11 @@ export const AuthService = {
       email: email,
       role: role,
       onlineStatus: true,
-      lastSeen: serverTimestamp()
+      lastSeen: serverTimestamp(),
     });
+
+    // send email verification
+    await sendEmailVerification(user);
 
     return user;
   },
@@ -42,9 +70,9 @@ export const AuthService = {
       const userRef = ref(db, `users/${userId}`);
       await update(userRef, {
         onlineStatus: false,
-        lastSeen: serverTimestamp()
+        lastSeen: serverTimestamp(),
       });
     }
     await signOut(auth);
-  }
+  },
 };

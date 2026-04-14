@@ -24,7 +24,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         return;
       }
 
-      if (!userProfile || !["admin", "superadmin"].includes(userProfile.role)) {
+      if (
+        !userProfile ||
+        !["agent", "admin", "superadmin"].includes(userProfile.role)
+      ) {
         router.push("/"); // atau halaman customer
       }
     }
@@ -44,7 +47,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     pathname !== "/admin/login" &&
     (!user ||
       !userProfile ||
-      !["admin", "superadmin"].includes(userProfile.role))
+      !["agent", "admin", "superadmin"].includes(userProfile.role))
   ) {
     return null;
   }
