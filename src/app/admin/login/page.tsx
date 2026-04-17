@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiLock, FiMail } from "react-icons/fi";
 import { AuthService } from "@/features/auth/services/auth.service";
-import { set } from "firebase/database";
+// import { set } from "firebase/database";
 
 export default function AdminLogin() {
   const DEMO_EMAIL = "superadmin@demo.com";
@@ -13,6 +13,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const router = useRouter();
@@ -36,6 +37,7 @@ export default function AdminLogin() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
@@ -56,11 +58,15 @@ export default function AdminLogin() {
   const handleRegister = async (e: React.MouseEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
-      await AuthService.register(email, password, "customer");
-      router.push("/admin");
+      await AuthService.register(email, password, "agent");
+      setSuccess(
+        "Register berhasil. Cek email untuk verifikasi, lalu login dari halaman ini.",
+      );
+      router.replace("/admin/login");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Unknown error";
       setError("Failed to register. " + message);
@@ -107,6 +113,12 @@ export default function AdminLogin() {
           {error && (
             <div className="mb-4 bg-red-50 text-red-600 p-3 rounded-lg text-sm border border-red-100">
               {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-100">
+              {success}
             </div>
           )}
 

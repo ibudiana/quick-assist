@@ -10,11 +10,14 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+const databaseURL =
+  process.env.PUBLIC_FIREBASE_DATABASE_URL ??
+  process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL;
 
 // Initialize Firebase Admin
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.PUBLIC_FIREBASE_DATABASE_URL,
+  databaseURL,
 });
 
 export const adminAuth = admin.auth();

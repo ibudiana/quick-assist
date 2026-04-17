@@ -18,11 +18,11 @@ export const AuthService = {
     const user = userCredential.user;
 
     // Mengecek apakah email sudah diverifikasi
-    // if (!user.emailVerified) {
-    //   throw new Error(
-    //     "Email belum diverifikasi. Harap periksa email Anda untuk verifikasi.",
-    //   );
-    // }
+    if (!user.emailVerified) {
+      throw new Error(
+        "Email belum diverifikasi. Harap periksa email Anda untuk verifikasi.",
+      );
+    }
 
     // Set user online
     const userId = user.uid;
@@ -40,7 +40,7 @@ export const AuthService = {
   async register(
     email: string,
     password: string,
-    role: string = "customer",
+    role: string = "agent",
     defaultName?: string,
   ) {
     const userCredential = await createUserWithEmailAndPassword(
@@ -55,18 +55,27 @@ export const AuthService = {
       name: defaultName || email.split("@")[0],
       email: email,
       role: role,
-      onlineStatus: true,
+      onlineStatus: false,
       lastSeen: serverTimestamp(),
     });
 
     // send email verification
-    await sendEmailVerification(user);
+    const actionCodeSettings = {
+      url: process.env.VERIF_URL || "http://localhost:3000/verify-email",
+      handleCodeInApp: true,
+    };
+
+    await sendEmailVerification(user, actionCodeSettings);
+    await signOut(auth); // Log out immediately after registration to force email verification
 
     return user;
   },
 
   async logout(userId?: string) {
-    if (userId) {
+    const hasInvalidKeyChars =
+      typeof userId === "string" && /[.#$\[\]/]/.test(userId);
+
+    if (userId && !hasInvalidKeyChars) {
       const userRef = ref(db, `users/${userId}`);
       await update(userRef, {
         onlineStatus: false,
