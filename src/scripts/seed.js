@@ -55,9 +55,7 @@ async function getOrCreateUser(email, password) {
       emailVerified: true,
     });
 
-    console.log(
-      `Created new auth user for ${email} -> UID: ${userRecord.uid}`,
-    );
+    console.log(`Created new auth user for ${email} -> UID: ${userRecord.uid}`);
     return userRecord.uid;
   } catch (error) {
     if (
