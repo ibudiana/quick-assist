@@ -1,7 +1,21 @@
 (function () {
   var iframe = document.createElement("iframe");
+  var script = document.currentScript;
+  var origin = "";
 
-  iframe.src = "http://localhost:3000/widget";
+  if (script && script.src) {
+    try {
+      origin = new URL(script.src).origin;
+    } catch (e) {
+      origin = "";
+    }
+  }
+
+  if (!origin && window.location && window.location.origin) {
+    origin = window.location.origin;
+  }
+
+  iframe.src = (origin ? origin : "") + "/widget";
   iframe.style.position = "fixed";
   iframe.style.bottom = "20px";
   iframe.style.right = "20px";
